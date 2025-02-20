@@ -86,7 +86,7 @@ alto=80
 # Diccionario con las rutas de los sprites organizados por acción
 rutas_mono = {
     "reposo": "imagenesmono/monito.png",
-    "izquierda": "imagenesmono/derechamono.png",
+    "izquierda": "imagenesmono/izquierdamono.png",
     "subir": "imagenesmono/arribamono.png"
 }
 donkingkong = Donkingkong(rutas_mono, COLOR_NEGRO, pos_x_don, pos_y_don, ancho, alto,velocidad)
