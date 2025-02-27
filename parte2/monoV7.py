@@ -25,7 +25,7 @@ class Fondo(pygame.sprite.Sprite):
         self.cuadros_animacion = {
             0: {"x": 10, "y": 345, "sprite_ancho": 230  , "sprite_alto": 272}
         }
-    def obtener_sprite_actual(self):
+    def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
         superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
         superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.scale_ancho, self.scale_alto))
@@ -116,7 +116,7 @@ while jugando:
     donkingkong.update()
 
     # Dibujar en la ventana
-    ventana.blit(fondo.obtener_sprite_actual(), (fondo.posx, fondo.posy))
+    ventana.blit(fondo.obtener_superficie_actual(), (fondo.posx, fondo.posy))
     ventana.blit(donkingkong.superficie, (donkingkong.posx, donkingkong.posy))
 
     pygame.display.flip()
