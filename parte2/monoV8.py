@@ -25,7 +25,7 @@ class Fondo(pygame.sprite.Sprite):
         self.cuadros_animacion = {
             0: {"x": 10, "y": 345, "sprite_ancho": 230  , "sprite_alto": 272}
         }
-    def obtener_sprite_actual(self):
+    def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
         superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
         superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.scale_ancho, self.scale_alto))
@@ -53,7 +53,7 @@ class Mario(pygame.sprite.Sprite):
             1: {"x": 30, "y": 200, "sprite_ancho": 20  , "sprite_alto": 40},
             2: {"x": 50, "y": 200, "sprite_ancho": 20  , "sprite_alto": 40}
         }
-    def obtener_sprite_actual(self):
+    def obtener_superficie_actual(self):
         clip = self.cuadros_animacion[self.frame  ]
         superficie_mario=self.hoja_sprite.subsurface((clip["x"], clip["y"], clip["sprite_ancho"], clip["sprite_ancho"]))
         superficie_mario.set_colorkey(self.color)
@@ -149,8 +149,8 @@ while jugando:
     donkingkong.update()
     mario.actualizar_frame()
     # Dibujar en la ventana
-    ventana.blit(fondo.obtener_sprite_actual(), (fondo.posx, fondo.posy))
-    ventana.blit(mario.obtener_sprite_actual(), (mario.posx, mario.posy))
+    ventana.blit(fondo.obtener_superficie_actual(), (fondo.posx, fondo.posy))
+    ventana.blit(mario.obtener_superficie_actual(), (mario.posx, mario.posy))
     ventana.blit(donkingkong.superficie, (donkingkong.posx, donkingkong.posy))
 
     pygame.display.flip()
