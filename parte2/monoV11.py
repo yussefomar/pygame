@@ -46,57 +46,78 @@ class Mario(pygame.sprite.Sprite):
         self.frame = 0
         self.color = color
         
-        self.frame_delay =10
+         
         
        # Inicializar animaciones
-        self.animaciones, self.num_frames = self.definir_animaciones()
+        self.animaciones, self.num_frames,self.frame_delays = self.definir_animaciones()
         self.animacion_actual = "reposo"  # Estado inicial
     
     def definir_animaciones(self):
         animaciones = {
             "izquierda": {
-                0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
+                "frames": {
+                    0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
                 1: {"x": 30, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
                 2: {"x": 50, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                },
+                "frame_delay": 8
             },
-            "arriba": {#69 87 103 126
-                0: {"x": 69, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                1: {"x": 87, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                2: {"x": 103, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                3: {"x": 126, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+            "arriba": {
+                "frames": {
+                     0: {"x": 69, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
+                     1: {"x": 87, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
+                     2: {"x": 103, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
+                     3: {"x": 126, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                },
+                "frame_delay": 12
             },
             "reposo": {
-                0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                "frames": {
+                    0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                },
+                "frame_delay": 20
             },
-            "golpe": {#10 36 (64,26) (86,38)
-                0: {"x": 12, "y": 225, "sprite_ancho": 20, "sprite_alto": 40},
-                1: {"x": 38, "y": 225, "sprite_ancho": 30, "sprite_alto": 40},
-                3: {"x": 64, "y": 225, "sprite_ancho": 26, "sprite_alto": 40},
-                2: {"x": 86, "y": 225, "sprite_ancho": 38, "sprite_alto": 40} 
+            "golpe": {
+                "frames": {
+                    0: {"x": 12, "y": 225, "sprite_ancho": 20, "sprite_alto": 40},
+                    1: {"x": 38, "y": 225, "sprite_ancho": 30, "sprite_alto": 40},
+                    3: {"x": 64, "y": 225, "sprite_ancho": 26, "sprite_alto": 40},
+                    2: {"x": 86, "y": 225, "sprite_ancho": 38, "sprite_alto": 40} 
+                },
+                "frame_delay": 15
             }
         }
-        
+
         num_frames = {}
-        for animacion, frames in animaciones.items():
-            num_frames[animacion] = len(frames)
+        for animacion, data in animaciones.items():
+            num_frames[animacion] = len(data["frames"])
         
-        return animaciones, num_frames
+        frame_delays = {}
+        for animacion, data in animaciones.items():
+            frame_delays[animacion] = data["frame_delay"]
+        
+        return animaciones, num_frames, frame_delays
     
     def obtener_superficie_actual(self):
-        animacion = self.animaciones[self.animacion_actual]  # Obtener el diccionario de animación actual
-        print(animacion)
-        
-        clip = animacion[self.frame // self.frame_delay]  # Obtener el frame correspondiente
+        animacion_frame_con_delay = self.animaciones[self.animacion_actual]  # si animacion_actual fuera izquierda
+        animacion_frame = animacion_frame_con_delay["frames"] 
+        animacion_delays=animacion_frame_con_delay["frame_delay"] # me devuelve 8 si es izquierda	
+        clip=animacion_frame[self.frame // animacion_delays]  # Obtener el frame correspondiente
        
         superficie_mario = self.hoja_sprite.subsurface((clip["x"], clip["y"], clip["sprite_ancho"], clip["sprite_alto"]))
         superficie_mario.set_colorkey(self.color)
         superficie_mario_escalado = pygame.transform.scale(superficie_mario, (self.scale_ancho, self.scale_alto))
         return superficie_mario_escalado
+
     
     def actualizar_frame(self):
-        self.frame += 1
-        if self.frame >= self.num_frames[self.animacion_actual] * self.frame_delay:
+        self.frame = self.frame+ 1
+        num_frame_actual=self.num_frames[self.animacion_actual]
+        delay_actual=self.frame_delays[self.animacion_actual]
+        
+        if self.frame >= num_frame_actual * delay_actual:
             self.frame = 0
+
     
     def actualizar_posicion(self):
         """Actualiza la posición del personaje basado en teclas presionadas."""
