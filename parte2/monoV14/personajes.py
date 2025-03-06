@@ -119,11 +119,11 @@ class Mario(Personaje):
 class Donkingkong(Personaje):
     def __init__(self, ruta, color, posx, posy, scale_ancho, scale_alto, velocidad):
         super().__init__( ruta, color, posx, posy, scale_ancho, scale_alto, velocidad)
-        self.reflejos={"izquierda":"derecha","arriba":"abajo"}
+        self.reflejos={}
         # Obtener el diccionario de animaciones
         self.cargar_superficies_numframe_delays(ANIMACIONES_DONKEYKONG)
         # se agrego para movimiento automatico
-        self.direcciones = ["arriba", "izquierda"]
+        self.direcciones = ["pecho", "lanza_barril"]
         self.indice_direccion = 0
         self.contador_frames = 0
         

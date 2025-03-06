@@ -38,15 +38,8 @@ ANIMACIONES_MARIO = {
         }
 
 ANIMACIONES_DONKEYKONG = {
-            "inicio": {
-                "frames": {
-                    0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                1: {"x": 30, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                2: {"x": 50, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
-                },
-                "frame_delay": 8
-            },
-            "arriba": {
+            
+            "pecho": {
                 "frames": {
                      0: {"x": 120, "y": 50, "sprite_ancho": 42, "sprite_alto": 40},
                      1: {"x": 175, "y": 50, "sprite_ancho": 42, "sprite_alto": 40},
@@ -54,20 +47,15 @@ ANIMACIONES_DONKEYKONG = {
                 },
                 "frame_delay": 22
             },
-            "reposo": {
-                "frames": {
-                    0: {"x": 10, "y": 50, "sprite_ancho": 42, "sprite_alto": 40}
-                },
-                "frame_delay": 10
-            },
-            "izquierda": {
+           
+            "lanza_barril": {
                 "frames": {
                     0: {"x": 10, "y": 146, "sprite_ancho": 43, "sprite_alto": 40},
                     1: {"x": 65, "y": 146, "sprite_ancho": 43, "sprite_alto": 40}
                    
                 },
                 "frame_delay": 22
-            }
+            },
         }
 
 ANIMACIONES_FUEGO = {
