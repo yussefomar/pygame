@@ -81,7 +81,7 @@ class Personaje(pygame.sprite.Sprite):
 
     def hay_colision(self, otro_personaje):
         """Verifica colisiones precisas usando la máscara y las posiciones."""
-        excepciones=["mario","ventana"]
+        excepciones=[self.tipo,"ventana"]
         
         if otro_personaje.tipo  not in excepciones : 
             offset_x = otro_personaje.posx - self.posx
@@ -192,8 +192,9 @@ class Mario(Personaje):
         self.actualizar_mask()
 
     def colision_con_parte_abajo(self,otro_personaje):
-        self.posy = otro_personaje.posy + otro_personaje.scale_alto - self.scale_alto -20
-        print( self.tipo + "choque abajo con " +otro_personaje.tipo )
+        if(otro_personaje.tipo=="bloque"):
+            self.posy = otro_personaje.posy  - self.scale_alto 
+       
          
 
 class Donkingkong(Personaje):
