@@ -5,24 +5,24 @@ ANIMACIONES_FONDO ={
 ANIMACIONES_MARIO = {
             "izquierda": {
                 "frames": {
-                    0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                1: {"x": 30, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                2: {"x": 50, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                    0: {"x": 16, "y": 203, "sprite_ancho": 12, "sprite_alto": 18},
+                1: {"x": 32, "y": 203, "sprite_ancho": 18, "sprite_alto": 18},
+                2: {"x": 52, "y": 203, "sprite_ancho": 18, "sprite_alto": 18}
                 },
                 "frame_delay": 8
             },
             "arriba": {
                 "frames": {
-                     0: {"x": 69, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                     1: {"x": 87, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                     2: {"x": 103, "y": 190, "sprite_ancho": 20, "sprite_alto": 40},
-                     3: {"x": 126, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                     0: {"x": 72, "y": 203, "sprite_ancho": 12, "sprite_alto": 18},
+                     1: {"x": 91, "y": 203, "sprite_ancho": 12, "sprite_alto": 18},
+                     2: {"x": 110, "y": 203, "sprite_ancho": 12, "sprite_alto": 18},
+                     3: {"x": 132, "y": 203, "sprite_ancho": 12, "sprite_alto": 18}
                 },
                 "frame_delay": 12
             },
             "reposo": {
                 "frames": {
-                    0: {"x": 10, "y": 190, "sprite_ancho": 20, "sprite_alto": 40}
+                    0: {"x": 16, "y": 203, "sprite_ancho": 12, "sprite_alto": 18}
                 },
                 "frame_delay": 20
             },
@@ -61,9 +61,9 @@ ANIMACIONES_DONKEYKONG = {
 ANIMACIONES_FUEGO = {
             "izquierda": {
                 "frames": { #238 242
-                    0: {"x": 238, "y": 100, "sprite_ancho": 14, "sprite_alto": 20},
-                1: {"x": 242, "y": 100, "sprite_ancho": 14, "sprite_alto": 20},
-                2: {"x": 275, "y": 100, "sprite_ancho": 14, "sprite_alto": 20}
+                    0: {"x": 238, "y": 100, "sprite_ancho": 14, "sprite_alto": 15},
+                1: {"x": 242, "y": 100, "sprite_ancho": 14, "sprite_alto": 14},
+                2: {"x": 275, "y": 100, "sprite_ancho": 14, "sprite_alto": 14}
                 },
                 "frame_delay": 15
             },
@@ -87,6 +87,6 @@ ANIMACIONES_BLOQUE = {
              
            
                
-                    0: {"x": 322, "y": 245, "sprite_ancho": 20, "sprite_alto": 15}
+                    0: {"x": 324, "y": 250, "sprite_ancho": 15, "sprite_alto": 8}
                
             } 

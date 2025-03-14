@@ -22,7 +22,8 @@ class Personaje(pygame.sprite.Sprite):
         #self.rectangulo_colision = pygame.Rect(self.posx, self.posy, self.scale_ancho, self.scale_alto)
         # La máscara se usará para colisiones precisas
         self.mascara = None
-
+        self.tipo=None
+        
 
     def actualizar_mask(self):
         """Actualiza la máscara basándose en la superficie actual."""
@@ -73,15 +74,24 @@ class Personaje(pygame.sprite.Sprite):
         
         if self.frame >= num_frame_actual * delay_actual:
             self.frame = 0
+       
             
     def actualizar_posicion(self):
         pass
 
     def hay_colision(self, otro_personaje):
         """Verifica colisiones precisas usando la máscara y las posiciones."""
-        offset_x = otro_personaje.posx - self.posx
-        offset_y = otro_personaje.posy - self.posy
-        return self.mascara.overlap(otro_personaje.mascara, (offset_x, offset_y)) is not None
+        excepciones=["mario","ventana"]
+        
+        if otro_personaje.tipo  not in excepciones : 
+            offset_x = otro_personaje.posx - self.posx
+            offset_y = otro_personaje.posy - self.posy
+            return self.mascara.overlap(otro_personaje.mascara, (offset_x, offset_y))
+        else:
+            return None
+
+        
+        
 
     def colisiona_con(self, otro_personaje):
         """
@@ -118,16 +128,16 @@ class Personaje(pygame.sprite.Sprite):
             return "indeterminado"
      
     def colision_con_parte_abajo(self,otro_personaje):
-        print( self.nombre + "choque abajo con " +otro_personaje.nombre )
+        print( self.tipo + "choque abajo con " +otro_personaje.tipo )
 
     def colision_con_parte_arriba(self,otro_personaje):
-        print( self.nombre +"choque arriba"+otro_personaje.nombre)
+        print( self.tipo +"choque arriba"+otro_personaje.tipo)
 
     def colision_con_parte_derecha(self,otro_personaje):
-        print( self.nombre +"choque derecha"+otro_personaje.nombre)    
+        print( self.tipo +"choque derecha"+otro_personaje.tipo)    
 
     def colision_con_parte_izquierda(self,otro_personaje):
-        print( self.nombre + "choque izquierda " +otro_personaje.nombre)
+        print( self.tipo + "choque izquierda " +otro_personaje.tipo)
 
 class Mario(Personaje):
     def __init__(self, ruta, color, posx, posy, scale_ancho, scale_alto, velocidad):
@@ -135,7 +145,9 @@ class Mario(Personaje):
         self.reflejos={"izquierda":"derecha","arriba":"abajo"}
         # Obtener el diccionario de animaciones
         self.cargar_superficies_numframe_delays(ANIMACIONES_MARIO)
-        self.nombre="mario"
+        self.tipo="mario"
+         # **Generar la máscara ya con el color key aplicado** 
+        self.actualizar_mask()
         
     def actualizar_posicion(self):
         """Actualiza la posición del personaje basado en teclas presionadas."""
@@ -179,7 +191,9 @@ class Mario(Personaje):
         # Actualizar la máscara después de mover
         self.actualizar_mask()
 
-
+    def colision_con_parte_abajo(self,otro_personaje):
+        self.posy = otro_personaje.posy + otro_personaje.scale_alto - self.scale_alto -20
+        print( self.tipo + "choque abajo con " +otro_personaje.tipo )
          
 
 class Donkingkong(Personaje):
@@ -192,7 +206,7 @@ class Donkingkong(Personaje):
         self.direcciones = ["pecho", "lanza_barril"]
         self.indice_direccion = 0
         self.contador_frames = 0
-        self.nombre="donkingkong"
+        self.tipo="donkingkong"
     def actualizar_posicion(self):
         self.contador_frames= self.contador_frames+1
         if self.contador_frames>=70:
@@ -221,12 +235,19 @@ class Fondo(Personaje):
         self.reflejos={}
         # Obtener el diccionario de animaciones
         self.cuadros_animacion = ANIMACIONES_FONDO
+        self.tipo="ventana"
 
     def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
         superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
         superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.scale_ancho, self.scale_alto))
         return  superficie_fondo_escalado
+    
+    def actualizar_posicion(self):
+         
+
+        # Actualizar la máscara después de mover
+        self.actualizar_mask()
 
 
         
@@ -240,7 +261,7 @@ class Fuego(Personaje):
         self.direcciones = ["derecha", "izquierda"]
         self.indice_direccion = 0
         self.contador_frames = 0
-        self.nombre="fuego"
+        self.tipo="fuego"
         
     def actualizar_posicion(self):
         self.contador_frames= self.contador_frames+1
@@ -273,12 +294,18 @@ class Barriles(Personaje):
         self.reflejos={}
         # Obtener el diccionario de animaciones
         self.cuadros_animacion = ANIMACIONES_BARRILES
+        self.tipo="barriles"
 
     def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
         superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
         superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.scale_ancho, self.scale_alto))
         return  superficie_fondo_escalado
+    def actualizar_posicion(self):
+         
+
+        # Actualizar la máscara después de mover
+        self.actualizar_mask()
     
 class Bloque(Personaje):
     def __init__(self, ruta, color, posx, posy, scale_ancho, scale_alto, velocidad):
@@ -286,7 +313,7 @@ class Bloque(Personaje):
         self.reflejos={}
         # Obtener el diccionario de animaciones
         self.cuadros_animacion = ANIMACIONES_BLOQUE
-        self.nombre="bloque"
+        self.tipo="bloque"
 
     def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
