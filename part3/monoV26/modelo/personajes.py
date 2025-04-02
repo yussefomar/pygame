@@ -1,10 +1,10 @@
 
  
-import pygame
 
-class Personaje(pygame.sprite.Sprite):
+
+class Personaje():
     def __init__(self , posx, posy, scale_ancho, scale_alto, velocidad):
-        pygame.sprite.Sprite.__init__(self)
+       
         
         self.posx = posx
         self.posy = posy
@@ -276,7 +276,7 @@ class Donkingkong(Personaje):
             
 
 class Fondo(Personaje):
-    def __init__(self  posx, posy, scale_ancho, scale_alto, velocidad):
+    def __init__(self , posx, posy, scale_ancho, scale_alto, velocidad):
         super().__init__(   posx, posy, scale_ancho, scale_alto, velocidad)
         
         self.tipo="ventana"
