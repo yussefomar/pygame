@@ -239,7 +239,8 @@ class Modelo:
 
         # 2) Chequear colisiones
         for personaje in self.lista_personajes_logicos:
-            personaje.colisiona_con(self.lista_personajes_logicos)
+            if personaje.tipo=="mario":
+                personaje.colisiona_con(self.lista_personajes_logicos)
 
     @property
     def personajes(self):

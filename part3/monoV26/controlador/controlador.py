@@ -1,6 +1,6 @@
 # controlador/controlador.py
 from modelo.personajes import Mario
-
+import pygame
 class Controlador:
     def __init__(self, modelo):
         """
@@ -17,21 +17,25 @@ class Controlador:
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
+    
             elif evento.type == pygame.KEYDOWN:
                 if self.mario_logico:
                     if evento.key == pygame.K_RIGHT:
-                        self.mario_logico.mover_derecha()
+                        self.mario_logico.aumevelocidadXRight()
                     elif evento.key == pygame.K_LEFT:
-                        self.mario_logico.mover_izquierda()
+                        self.mario_logico.aumevelocidadXLeft()
                     elif evento.key == pygame.K_UP:
-                        self.mario_logico.saltar()
+                        self.mario_logico.aumevelocidadYUp()
                     elif evento.key == pygame.K_DOWN:
-                        self.mario_logico.mover_abajo()
+                        self.mario_logico.aumevelocidadYDown()
 
             elif evento.type == pygame.KEYUP:
                 if self.mario_logico:
-                    if evento.key in (pygame.K_RIGHT, pygame.K_LEFT):
-                        self.mario_logico.parar_mov_horizontal()
-                    elif evento.key in (pygame.K_UP, pygame.K_DOWN):
-                        self.mario_logico.parar_mov_vertical()
+                    if evento.key == pygame.K_RIGHT:
+                        self.mario_logico.dismivelocidadXRight()
+                    elif evento.key == pygame.K_LEFT:
+                        self.mario_logico.dismivelocidadXLeft()
+                    elif evento.key == pygame.K_UP:
+                        self.mario_logico.dismivelocidadYUp()
+                    elif evento.key == pygame.K_DOWN:
+                        self.mario_logico.dismivelocidadYDown()

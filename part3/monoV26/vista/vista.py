@@ -1,6 +1,9 @@
 # vista/sprites.py
 import pygame
 
+from modelo.personajes import Bloque, Mario
+from vista.sprites import SpriteBarriles, SpriteBloque, SpriteDonkingkong, SpriteFondo, SpriteMario
+
 
 class Vista:
     """
@@ -18,11 +21,23 @@ class Vista:
 
     def _crear_sprites(self):
         for p in self.modelo.personajes:
-            if isinstance(p, Mario):
-                sprite = SpriteMario(p)
+            if p.tipo=="mario":
+                sprite = SpriteMario(p,)
+                self.sprite_group.add(sprite,"imagenesmono/hojasprite.png", (0, 0, 0))
+            elif p.tipo=="bloque":
+                sprite = SpriteBloque(p,"imagenesmono/hojasprite.png", (0, 0, 0))
                 self.sprite_group.add(sprite)
-            elif isinstance(p, BloqueLogico):
-                sprite = SpriteBloque(p)
+            elif p.tipo=="barriles":
+                sprite = SpriteBarriles(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+                self.sprite_group.add(sprite)
+            elif p.tipo=="fuego":
+                sprite = SpriteFondo(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+                self.sprite_group.add(sprite)
+            elif p.tipo=="ventana":
+                sprite = SpriteDonkingkong(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+                self.sprite_group.add(sprite)
+            elif p.tipo=="donkingkong":
+                sprite = SpriteBloque(p,"imagenesmono/hojasprite.png", (0, 0, 0))
                 self.sprite_group.add(sprite)
             # Agregar más elif para otros personajes lógicos que tengas
 
