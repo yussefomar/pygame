@@ -6,11 +6,23 @@ class Controlador:
         """
         Recibe el modelo completo y localiza a Mario u otros personajes controlables.
         """
-        self.modelo = modelo
-        self.mario_logico = next(
-            (p for p in self.modelo.personajes if isinstance(p, Mario)),
-            None
-        )
+       
+        self.modelo=modelo
+        encontro = False
+        i = 0
+        self.mario_logico = None  # Inicializamos por si no se encuentra
+        # Obtenemos la lista de personajes a través del método
+        personajes = self.modelo.get_personajes()
+        print(personajes)
+        while i < len(personajes) and not encontro:
+            if personajes[i].tipo == "mario":
+                self.mario_logico = personajes[i]
+                 
+                encontro = True
+            else:
+                i += 1
+        
+         
 
     def manejar_eventos(self):
         for evento in pygame.event.get():

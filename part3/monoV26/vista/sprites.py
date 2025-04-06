@@ -1,6 +1,6 @@
 # vista_sprites.py
 import pygame
-from vista.animaciones import ANIMACIONES_BARRILES, ANIMACIONES_BLOQUE, ANIMACIONES_FONDO, ANIMACIONES_MARIO, ANIMACIONES_DONKEYKONG
+from vista.animaciones import ANIMACIONES_BARRILES, ANIMACIONES_BLOQUE, ANIMACIONES_FONDO, ANIMACIONES_FUEGO, ANIMACIONES_MARIO, ANIMACIONES_DONKEYKONG
 # Podrás importar ANIMACIONES_FONDO, ANIMACIONES_FUEGO, etc. si las usas
 # from modelo.personajes import Mario, Donkingkong, ... 
 # (Normalmente no necesitás importar las clases lógicas aquí, 
@@ -99,21 +99,7 @@ class SpriteBase(pygame.sprite.Sprite):
         self.rect.x = self.logico.posx
         self.rect.y = self.logico.posy
 
-        # Descubrir la acción actual del modelo
-        if hasattr(self.logico, "get_accion"):
-            estado = self.logico.get_accion()  # p.ej. 'derecha', 'salto', etc.
-        else:
-            estado = "reposo"  # Si no hay get_accion, usamos algo fijo.
-
-        # Si cambió el estado, reseteamos el frame
-        if estado != self.animacion_actual:
-            self.animacion_actual = estado
-            self.frame = 0
-
-        
-
-        self.actualizar_frame()                # Incrementa el frame según el delay
-        self.image = self.obtener_superficie_actual()  # Obtiene el frame actual de surfaces
+         
 
 
 class SpriteMario(SpriteBase):
@@ -146,18 +132,105 @@ class SpriteMario(SpriteBase):
         self.frame = 0
         if "reposo" in self.superficies:
             self.image = self.superficies["reposo"][0]
+    def update(self):
+        """
+        - Sincroniza la posición con self.logico.
+        - Pregunta al Modelo qué acción/estado tiene.
+        - Avanza el frame y actualiza self.image.
+        """
+        # Sincronizar rect
+        self.rect.x = self.logico.posx
+        self.rect.y = self.logico.posy
 
+        # Descubrir la acción actual del modelo
+        if hasattr(self.logico, "get_accion"):
+            estado = self.logico.get_accion()  # p.ej. 'derecha', 'salto', etc.
+        else:
+            estado = "reposo"  # Si no hay get_accion, usamos algo fijo.
 
+        # Si cambió el estado, reseteamos el frame
+        if estado != self.animacion_actual:
+            self.animacion_actual = estado
+            self.frame = 0
+
+        
+
+        self.actualizar_frame()                # Incrementa el frame según el delay
+        self.image = self.obtener_superficie_actual()  # Obtiene el frame actual de surfaces
+
+class SpriteFuego(SpriteBase):
+    def __init__(self, dk_logico, ruta_imagen, color_key=None):
+        super().__init__(dk_logico, ruta_imagen, color_key)
+        self.reflejos={"izquierda": "derecha" }
+       
+        self.cargar_superficies_numframe_delays(
+            animaciones=ANIMACIONES_FUEGO,
+            color=color_key,
+            scale_ancho=dk_logico.scale_ancho,
+            scale_alto=dk_logico.scale_alto
+        )
+    def update(self):
+        """
+        - Sincroniza la posición con self.logico.
+        - Pregunta al Modelo qué acción/estado tiene.
+        - Avanza el frame y actualiza self.image.
+        """
+        # Sincronizar rect
+        self.rect.x = self.logico.posx
+        self.rect.y = self.logico.posy
+
+        # Descubrir la acción actual del modelo
+        if hasattr(self.logico, "get_accion"):
+            estado = self.logico.get_accion()  # p.ej. 'derecha', 'salto', etc.
+        else:
+            estado = "izquierda"  # Si no hay get_accion, usamos algo fijo.
+
+        # Si cambió el estado, reseteamos el frame
+        if estado != self.animacion_actual:
+            self.animacion_actual = estado
+            self.frame = 0
+
+        
+
+        self.actualizar_frame()                # Incrementa el frame según el delay
+        self.image = self.obtener_superficie_actual()  # Obtiene el frame actual de surfaces
+        
 class SpriteDonkingkong(SpriteBase):
     def __init__(self, dk_logico, ruta_imagen, color_key=None):
         super().__init__(dk_logico, ruta_imagen, color_key)
         self.reflejos={}
+       
         self.cargar_superficies_numframe_delays(
             animaciones=ANIMACIONES_DONKEYKONG,
             color=color_key,
             scale_ancho=dk_logico.scale_ancho,
             scale_alto=dk_logico.scale_alto
         )
+    def update(self):
+        """
+        - Sincroniza la posición con self.logico.
+        - Pregunta al Modelo qué acción/estado tiene.
+        - Avanza el frame y actualiza self.image.
+        """
+        # Sincronizar rect
+        self.rect.x = self.logico.posx
+        self.rect.y = self.logico.posy
+
+        # Descubrir la acción actual del modelo
+        if hasattr(self.logico, "get_accion"):
+            estado = self.logico.get_accion()  # p.ej. 'derecha', 'salto', etc.
+        else:
+            estado = "pecho"  # Si no hay get_accion, usamos algo fijo.
+
+        # Si cambió el estado, reseteamos el frame
+        if estado != self.animacion_actual:
+            self.animacion_actual = estado
+            self.frame = 0
+
+        
+
+        self.actualizar_frame()                # Incrementa el frame según el delay
+        self.image = self.obtener_superficie_actual()  # Obtiene el frame actual de surfaces
 
 
 # Ejemplo (podrías hacer lo mismo con Fuego, Barriles, etc.)
@@ -167,14 +240,13 @@ class SpriteBloque(SpriteBase):
         # Cargamos frames
         self.reflejos={}
         print("holaaa animacion bloque",ANIMACIONES_BLOQUE)
-       
+        self.cuadros_animacion = ANIMACIONES_BLOQUE
     def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
         superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
-        superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.scale_ancho, self.scale_alto))
+        superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.logico.scale_ancho, self.logico.scale_alto))
         return  superficie_fondo_escalado    
-    def update(self):
-        pass
+     
     
 class SpriteBarriles(SpriteBase):
     def __init__(self, barriles_logico, ruta_imagen, color):
@@ -185,7 +257,7 @@ class SpriteBarriles(SpriteBase):
     def obtener_superficie_actual(self):
         sprite = self.cuadros_animacion[0]
         superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
-        superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.scale_ancho, self.scale_alto))
+        superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.logico.scale_ancho, self.logico.scale_alto))
         return  superficie_fondo_escalado    
 
 class SpriteFondo(SpriteBase):
@@ -194,16 +266,10 @@ class SpriteFondo(SpriteBase):
         self.reflejos={}
         # Obtener el diccionario de animaciones
         self.cuadros_animacion = ANIMACIONES_FONDO
+    def obtener_superficie_actual(self):
+        sprite = self.cuadros_animacion[0]
+        superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
+        superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.logico.scale_ancho, self.logico.scale_alto))
+        return  superficie_fondo_escalado    
 
-    def update(self):
-        # Fondo usualmente se queda quieto en (posx, posy)
-        self.rect.x = self.logico.posx
-        self.rect.y = self.logico.posy
-
-        # Normalmente un fondo puede no tener más estados
-        if "reposo" in self.superficies:
-            if self.animacion_actual != "reposo":
-                self.animacion_actual = "reposo"
-                self.frame = 0
-
-        self.actualizar_frame()
+     

@@ -216,15 +216,16 @@ class Modelo:
         )
 
         # Creamos una sola lista de personajes
-        lista_personajes = [
-            fondo,
+        lista_personajes =[]+lista_todos_los_bloques+ [
+           
             donkingkong,
             mario,
             fuego,
             fuego1,
             fuego2,
-            barriles
-        ] + lista_todos_los_bloques
+            barriles,
+             fondo
+        ]  
 
         # Asignamos esa lista al atributo interno
         self.lista_personajes_logicos = lista_personajes
@@ -238,11 +239,16 @@ class Modelo:
             personaje.actualizar_posicion()
 
         # 2) Chequear colisiones
-        for personaje in self.lista_personajes_logicos:
-            if personaje.tipo=="mario":
-                personaje.colisiona_con(self.lista_personajes_logicos)
+        encontro = False
+        i = 0
+        while i < len(self.lista_personajes_logicos) and not encontro:
+            if self.lista_personajes_logicos[i].tipo == "mario":
+                self.lista_personajes_logicos[i].colisiona_con(self.lista_personajes_logicos)
+                encontro = True  # Se encontró a Mario, se sale del bucle
+            else:
+                i += 1
 
-    @property
-    def personajes(self):
+   
+    def get_personajes(self):
         # Devolvemos la lista de personajes, por si la Vista los usa
         return self.lista_personajes_logicos

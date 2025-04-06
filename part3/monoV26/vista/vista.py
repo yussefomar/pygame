@@ -2,7 +2,7 @@
 import pygame
 
 from modelo.personajes import Bloque, Mario
-from vista.sprites import SpriteBarriles, SpriteBloque, SpriteDonkingkong, SpriteFondo, SpriteMario
+from vista.sprites import SpriteBarriles, SpriteBloque, SpriteDonkingkong, SpriteFondo, SpriteFuego, SpriteMario
 
 
 class Vista:
@@ -20,32 +20,35 @@ class Vista:
         self._crear_sprites()
 
     def _crear_sprites(self):
-        for p in self.modelo.personajes:
-            if p.tipo=="mario":
-                sprite = SpriteMario(p,)
-                self.sprite_group.add(sprite,"imagenesmono/hojasprite.png", (0, 0, 0))
-            elif p.tipo=="bloque":
+        personajes = self.modelo.get_personajes()
+        for p in personajes:
+            
+            if p.tipo=="bloque":
                 sprite = SpriteBloque(p,"imagenesmono/hojasprite.png", (0, 0, 0))
                 self.sprite_group.add(sprite)
             elif p.tipo=="barriles":
                 sprite = SpriteBarriles(p,"imagenesmono/hojasprite.png", (0, 0, 0))
                 self.sprite_group.add(sprite)
-            elif p.tipo=="fuego":
-                sprite = SpriteFondo(p,"imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-            elif p.tipo=="ventana":
-                sprite = SpriteDonkingkong(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+             
+            elif p.tipo=="mario":
+                sprite = SpriteMario(p,"imagenesmono/hojasprite.png", (0, 0, 0))
                 self.sprite_group.add(sprite)
             elif p.tipo=="donkingkong":
-                sprite = SpriteBloque(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+                sprite = SpriteDonkingkong(p,"imagenesmono/hojasprite.png", (0, 0, 0))
                 self.sprite_group.add(sprite)
+            elif p.tipo=="fuego":
+                sprite = SpriteFuego(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+                self.sprite_group.add(sprite)
+            elif p.tipo=="ventana":
+                sprite = SpriteFondo(p,"imagenesmono/hojasprite.png", (0, 0, 0))
+                self.sprite_group.add(sprite) 
             # Agregar más elif para otros personajes lógicos que tengas
 
     def update(self):
         """
         Llama a update en los sprites para reflejar
         la posición actual del modelo.
-        """
+        """ 
         self.sprite_group.update()
 
     def render(self):
@@ -54,5 +57,9 @@ class Vista:
         Al final del bucle, esta es la parte visual.
         """
         self.ventana.fill((0, 0, 0))
-        self.sprite_group.draw(self.ventana)
+        for sprite in self.sprite_group:
+            print("que empezara", sprite.logico.tipo)
+            self.ventana.blit(sprite.obtener_superficie_actual(),(sprite.logico.posx, sprite.logico.posy))
+        #self.ventana.fill((0, 0, 0))
+        #self.sprite_group.draw(self.ventana)
         pygame.display.flip()

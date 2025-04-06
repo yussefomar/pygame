@@ -33,33 +33,36 @@ class Personaje():
         pass
 
     def actualizar_rectangulo_colision(self):
-        self.rectangulo_colision.posx = self.posx
-        self.rectangulo_colision.posy = self.posy
- 
+        self.rectangulo_colision.actualizar(self.posx,self.posy)
+        
+       
 
-def hay_colision(self, otro_personaje):
-    """Verifica si este personaje colisiona con otro y retorna True o None."""
-    excepciones = [self.tipo, "ventana"]
-    if otro_personaje.tipo not in excepciones:
-        # Tomar (x, y, ancho, alto) del rectángulo de colisión
-        x1 = self.rectangulo_colision.x
-        y1 = self.rectangulo_colision.y
-        w1 = self.rectangulo_colision.ancho
-        h1 = self.rectangulo_colision.alto
+    def hay_colision(self, otro_personaje):
+        """Verifica si este personaje colisiona con otro y retorna True o None."""
+        excepciones = [self.tipo, "ventana"]
+        if otro_personaje.tipo not in excepciones:
+            # Tomar (x, y, ancho, alto) del rectángulo de colisión
+            x1 = self.rectangulo_colision.x
+            y1 = self.rectangulo_colision.y
+            w1 = self.rectangulo_colision.ancho
+            h1 = self.rectangulo_colision.alto
 
-        x2 = otro_personaje.rectangulo_colision.x
-        y2 = otro_personaje.rectangulo_colision.y
-        w2 = otro_personaje.rectangulo_colision.ancho
-        h2 = otro_personaje.rectangulo_colision.alto
+            x2 = otro_personaje.rectangulo_colision.x
+            y2 = otro_personaje.rectangulo_colision.y
+            w2 = otro_personaje.rectangulo_colision.ancho
+            h2 = otro_personaje.rectangulo_colision.alto
+             
+                
 
-        return (
-            x1 < x2 + w2 and
-            x1 + w1 > x2 and
-            y1 < y2 + h2 and
-            y1 + h1 > y2
-        )
-    else:
-        return None
+            return (
+                x1 < x2 + w2 and
+                x1 + w1 > x2 and
+                y1 < y2 + h2 and
+                y1 + h1 > y2
+            )
+        else:
+             
+            return None
 
         
     def colision_personajes(self,lista_bloques):
@@ -68,7 +71,6 @@ def hay_colision(self, otro_personaje):
             if self.hay_colision(un_bloque):
                 self.esta_suelo=True
                 return True
-                
 
         self.esta_suelo=False
         return False
@@ -84,12 +86,13 @@ def hay_colision(self, otro_personaje):
        
         
         self.colision_personajes(lista_personajes)
+        print("colision",self.colision_personajes(lista_personajes))
 
         
         for otro_personaje in lista_personajes:
-            
+        
             if  self.hay_colision(otro_personaje):
-                # Chequear colisión basándote en la posición anterior
+                    # Chequear colisión basándote en la posición anterior
                 if self.old_y + self.scale_alto <= otro_personaje.posy:
                     self.colision_con_parte_arriba(otro_personaje)
                 elif self.old_y >= otro_personaje.posy + otro_personaje.scale_alto:
@@ -128,6 +131,7 @@ class Mario(Personaje):
         self.velocidad_y = 0
         # variable para ver si colision con el suelo
         self.esta_suelo=False
+        self.tipo="mario"
     
 
 
