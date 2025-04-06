@@ -1,8 +1,14 @@
 # vista/sprites.py
 import pygame
 
-from modelo.personajes import Bloque, Mario
-from vista.sprites import SpriteBarriles, SpriteBloque, SpriteDonkingkong, SpriteFondo, SpriteFuego, SpriteMario
+ 
+from vista.sprites_personajes.sprite_barriles import SpriteBarriles 
+from vista.sprites_personajes.sprite_bloque import  SpriteBloque 
+from vista.sprites_personajes.sprite_donkingkong import   SpriteDonkingkong 
+from vista.sprites_personajes.sprite_fondo import   SpriteFondo 
+from vista.sprites_personajes.sprite_fuego import   SpriteFuego 
+from vista.sprites_personajes.sprite_mario import   SpriteMario
+ 
 
 
 class Vista:

@@ -1,11 +1,12 @@
-from modelo.personajes import (
-    Mario,
-    Donkingkong,
-    Fuego,
-    Barriles,
-    Fondo,
-    Bloque
-)
+ 
+
+from modelo.personajes.barriles import Barriles
+from modelo.personajes.donkingkong import Donkingkong
+from modelo.personajes.fondo import Fondo
+from modelo.personajes.fuego import Fuego
+from modelo.personajes.mario import Mario
+from modelo.personajes.bloque import Bloque 
+
 
 class Modelo:
     def __init__(self):

@@ -1,5 +1,5 @@
 # controlador/controlador.py
-from modelo.personajes import Mario
+ 
 import pygame
 class Controlador:
     def __init__(self, modelo):
