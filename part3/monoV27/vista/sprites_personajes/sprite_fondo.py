@@ -1,0 +1,19 @@
+
+import pygame
+from vista.animaciones import ANIMACIONES_FONDO
+from vista.sprites_personajes.sprites import SpriteBase
+
+
+class SpriteFondo(SpriteBase):
+    def __init__(self, fondo_logico, ruta_imagen, color):
+        super().__init__(fondo_logico, ruta_imagen, color)
+        self.reflejos={}
+        # Obtener el diccionario de animaciones
+        self.cuadros_animacion = ANIMACIONES_FONDO
+    def obtener_superficie_actual(self):
+        sprite = self.cuadros_animacion[0]
+        superficie_fondo=self.hoja_sprite.subsurface((sprite["x"], sprite["y"], sprite["sprite_ancho"], sprite["sprite_alto"]))
+        superficie_fondo_escalado=pygame.transform.scale(superficie_fondo, (self.logico.scale_ancho, self.logico.scale_alto))
+        return  superficie_fondo_escalado    
+
+     
