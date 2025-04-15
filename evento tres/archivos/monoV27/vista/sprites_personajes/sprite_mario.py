@@ -25,34 +25,5 @@ class SpriteMario(SpriteBase):
             scale_alto=mario_logico.scale_alto,
         )
 
-        # Iniciamos en la animación "reposo"
-        self.animacion_actual = "reposo"
-        self.frame = 0
-        if "reposo" in self.superficies:
-            self.image = self.superficies["reposo"][0]
-
-    def update(self):
-        """
-        - Sincroniza la posición con self.logico.
-        - Pregunta al Modelo qué acción/estado tiene.
-        - Avanza el frame y actualiza self.image.
-        """
-        # Sincronizar rect
-        self.rect.x = self.logico.posx
-        self.rect.y = self.logico.posy
-
-        # Descubrir la acción actual del modelo
-        if hasattr(self.logico, "get_accion"):
-            estado = self.logico.get_accion()  # p.ej. 'derecha', 'salto', etc.
-        else:
-            estado = "reposo"  # Si no hay get_accion, usamos algo fijo.
-
-        # Si cambió el estado, reseteamos el frame
-        if estado != self.animacion_actual:
-            self.animacion_actual = estado
-            self.frame = 0
-
-        self.actualizar_frame()  # Incrementa el frame según el delay
-        self.image = (
-            self.obtener_superficie_actual()
-        )  # Obtiene el frame actual de surfaces
+        
+ 

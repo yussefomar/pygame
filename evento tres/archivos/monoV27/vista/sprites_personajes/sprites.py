@@ -75,10 +75,9 @@ class SpriteBase(pygame.sprite.Sprite):
         num_frames = {}
         frame_delays = {}
         superficies = {}
-        print("hola entro items ", animaciones.items())
-        print("hola", animaciones.items())
+        
         for animacion, data in animaciones.items():
-            print("hola entro animacion  data ", data)
+             
             num_frames[animacion] = len(data["frames"])
             frame_delays[animacion] = data["frame_delay"]
 
@@ -116,3 +115,18 @@ class SpriteBase(pygame.sprite.Sprite):
         # Sincronizar rect
         self.rect.x = self.logico.posx
         self.rect.y = self.logico.posy
+
+        # Descubrir la acción actual del modelo
+         
+        estado = self.logico.get_accion()  # p.ej. 'derecha', 'salto', etc.
+         
+
+        # Si cambió el estado, reseteamos el frame
+        if estado != self.animacion_actual:
+            self.animacion_actual = estado
+            self.frame = 0
+
+        self.actualizar_frame()  # Incrementa el frame según el delay
+        self.image = (
+            self.obtener_superficie_actual()
+        )  # Obtiene el frame actual de surfaces

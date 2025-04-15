@@ -22,40 +22,37 @@ class Vista:
     def __init__(self, modelo, ventana):
         self.modelo = modelo
         self.ventana = ventana
-        self.sprite_group = pygame.sprite.Group()
+        self.sprite_group = []
         self._crear_sprites()
 
     def _crear_sprites(self):
         personajes = self.modelo.get_personajes()
+        ruta = "imagenesmono/hojasprite.png"
+        color = (0, 0, 0)
+
+        tipo_a_sprite = {
+            "bloque": SpriteBloque,
+            "barriles": SpriteBarriles,
+            "mario": SpriteMario,
+            "donkingkong": SpriteDonkingkong,
+            "fuego": SpriteFuego,
+            "ventana": SpriteFondo,
+        }
+
         for p in personajes:
+            clase_sprite = tipo_a_sprite.get(p.tipo)
+            if clase_sprite:
+                sprite = clase_sprite(p, ruta, color)
+                self.sprite_group.append(sprite)
 
-            if p.tipo == "bloque":
-                sprite = SpriteBloque(p, "imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-            elif p.tipo == "barriles":
-                sprite = SpriteBarriles(p, "imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-
-            elif p.tipo == "mario":
-                sprite = SpriteMario(p, "imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-            elif p.tipo == "donkingkong":
-                sprite = SpriteDonkingkong(p, "imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-            elif p.tipo == "fuego":
-                sprite = SpriteFuego(p, "imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-            elif p.tipo == "ventana":
-                sprite = SpriteFondo(p, "imagenesmono/hojasprite.png", (0, 0, 0))
-                self.sprite_group.add(sprite)
-            # Agregar más elif para otros personajes lógicos que tengas
 
     def update(self):
         """
         Llama a update en los sprites para reflejar
         la posición actual del modelo.
         """
-        self.sprite_group.update()
+        for sprite in self.sprite_group:  
+            sprite.update()
 
     def render(self):
         """

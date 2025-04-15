@@ -19,3 +19,12 @@ class SpriteFondo(SpriteBase):
             superficie_fondo, (self.logico.scale_ancho, self.logico.scale_alto)
         )
         return superficie_fondo_escalado
+    def update(self):
+        """
+        - Sincroniza la posición con self.logico.
+        - Pregunta al Modelo qué acción/estado tiene.
+        - Avanza el frame y actualiza self.image.
+        """
+        # Sincronizar rect
+        self.rect.x = self.logico.posx
+        self.rect.y = self.logico.posy
