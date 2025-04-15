@@ -78,15 +78,4 @@ class Personaje:
                     self.colision_con_parte_izquierda(otro_personaje)
                 elif self.old_x >= otro_personaje.posx + otro_personaje.scale_ancho:
                     self.colision_con_parte_derecha(otro_personaje)
-
-    def colision_con_parte_abajo(self, otro_personaje):
-        print(self.tipo + "choque abajo con " + otro_personaje.tipo)
-
-    def colision_con_parte_arriba(self, otro_personaje):
-        print(self.tipo + "choque arriba" + otro_personaje.tipo)
-
-    def colision_con_parte_derecha(self, otro_personaje):
-        print(self.tipo + "choque derecha" + otro_personaje.tipo)
-
-    def colision_con_parte_izquierda(self, otro_personaje):
-        print(self.tipo + "choque izquierda " + otro_personaje.tipo)
+ 
