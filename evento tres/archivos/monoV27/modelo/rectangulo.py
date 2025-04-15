@@ -10,4 +10,6 @@ class Rectangulo:
         self.y = y
 
     def __repr__(self):
-        return f"Rectangulo(x={self.x}, y={self.y}, ancho={self.ancho}, alto={self.alto})"
+        return (
+            f"Rectangulo(x={self.x}, y={self.y}, ancho={self.ancho}, alto={self.alto})"
+        )

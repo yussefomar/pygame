@@ -1,11 +1,9 @@
- 
-
 from modelo.personajes.barriles import Barriles
 from modelo.personajes.donkingkong import Donkingkong
 from modelo.personajes.fondo import Fondo
 from modelo.personajes.fuego import Fuego
 from modelo.personajes.mario import Mario
-from modelo.personajes.bloque import Bloque 
+from modelo.personajes.bloque import Bloque
 
 
 class Modelo:
@@ -35,7 +33,7 @@ class Modelo:
             posy=0,
             scale_ancho=ANCHO_VENTANA,
             scale_alto=ALTO_VENTANA,
-            velocidad=velocidad  # Puedes dejarlo en 0 si tu fondo no se mueve
+            velocidad=velocidad,  # Puedes dejarlo en 0 si tu fondo no se mueve
         )
 
         donkingkong = Donkingkong(
@@ -43,50 +41,24 @@ class Modelo:
             posy=pos_y_don,
             scale_ancho=ancho_don,
             scale_alto=alto_don,
-            velocidad=velocidad
+            velocidad=velocidad,
         )
 
         mario = Mario(
-            posx=52,
-            posy=493,
-            scale_ancho=35,
-            scale_alto=35,
-            velocidad=velocidad
+            posx=52, posy=493, scale_ancho=35, scale_alto=35, velocidad=velocidad
         )
 
-        fuego = Fuego(
-            posx=20,
-            posy=386,
-            scale_ancho=25,
-            scale_alto=20,
-            velocidad=1
-        )
-        fuego1 = Fuego(
-            posx=320,
-            posy=523,
-            scale_ancho=25,
-            scale_alto=20,
-            velocidad=1
-        )
-        fuego2 = Fuego(
-            posx=520,
-            posy=463,
-            scale_ancho=25,
-            scale_alto=20,
-            velocidad=1
-        )
+        fuego = Fuego(posx=20, posy=386, scale_ancho=25, scale_alto=20, velocidad=1)
+        fuego1 = Fuego(posx=320, posy=523, scale_ancho=25, scale_alto=20, velocidad=1)
+        fuego2 = Fuego(posx=520, posy=463, scale_ancho=25, scale_alto=20, velocidad=1)
 
         barriles = Barriles(
-            posx=1,
-            posy=115,
-            scale_ancho=55,
-            scale_alto=68,
-            velocidad=1
+            posx=1, posy=115, scale_ancho=55, scale_alto=68, velocidad=1
         )
 
         # Función para crear una lista de bloques en fila/columna
         def crear_lista_bloques(
-            cantidad, 
+            cantidad,
             clase_bloque,
             inicio_x,
             inicio_y,
@@ -94,7 +66,7 @@ class Modelo:
             scale_alto,
             espaciado_x=50,
             espaciado_y=0,
-            velocidad=1
+            velocidad=1,
         ):
             """
             Crea 'cantidad' de bloques, desplazados por espaciado_x e
@@ -109,7 +81,7 @@ class Modelo:
                     posy=y,
                     scale_ancho=scale_ancho,
                     scale_alto=scale_alto,
-                    velocidad=velocidad
+                    velocidad=velocidad,
                 )
                 lista.append(bloque)
             return lista
@@ -124,7 +96,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=0,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques2 = crear_lista_bloques(
             cantidad=10,
@@ -135,7 +107,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=-5,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques3 = crear_lista_bloques(
             cantidad=14,
@@ -146,7 +118,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=2,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques4 = crear_lista_bloques(
             cantidad=14,
@@ -157,7 +129,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=-2,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques5 = crear_lista_bloques(
             cantidad=14,
@@ -168,7 +140,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=2,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques6 = crear_lista_bloques(
             cantidad=14,
@@ -179,7 +151,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=-2,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques7 = crear_lista_bloques(
             cantidad=12,
@@ -190,7 +162,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=0,
-            velocidad=1
+            velocidad=1,
         )
         lista_bloques8 = crear_lista_bloques(
             cantidad=3,
@@ -201,7 +173,7 @@ class Modelo:
             scale_alto=18,
             espaciado_x=50,
             espaciado_y=2,
-            velocidad=1
+            velocidad=1,
         )
 
         # Unimos todos los bloques en una lista
@@ -217,16 +189,11 @@ class Modelo:
         )
 
         # Creamos una sola lista de personajes
-        lista_personajes =[]+lista_todos_los_bloques+ [
-           
-            donkingkong,
-            mario,
-            fuego,
-            fuego1,
-            fuego2,
-            barriles,
-             fondo
-        ]  
+        lista_personajes = (
+            []
+            + lista_todos_los_bloques
+            + [donkingkong, mario, fuego, fuego1, fuego2, barriles, fondo]
+        )
 
         # Asignamos esa lista al atributo interno
         self.lista_personajes_logicos = lista_personajes
@@ -241,11 +208,9 @@ class Modelo:
 
         # 2) Chequear colisiones
         for personaje in self.lista_personajes_logicos:
-            if personaje.tipo=="mario" or personaje.tipo=="fuego":
+            if personaje.tipo == "mario" or personaje.tipo == "fuego":
                 personaje.colisiona_con(self.get_personajes())
-         
 
-   
     def get_personajes(self):
         # Devolvemos la lista de personajes, por si la Vista los usa
         return self.lista_personajes_logicos

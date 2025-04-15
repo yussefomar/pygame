@@ -5,6 +5,7 @@ from modelo.modelo import Modelo
 from vista.vista import Vista
 from controlador.controlador import Controlador
 
+
 def main():
     pygame.init()
     ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
@@ -36,5 +37,6 @@ def main():
 
     pygame.quit()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

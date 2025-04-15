@@ -1,6 +1,7 @@
 # vista_sprites.py
 import pygame
- 
+
+
 class SpriteBase(pygame.sprite.Sprite):
     """
     Clase base para la Vista de un personaje.
@@ -11,9 +12,12 @@ class SpriteBase(pygame.sprite.Sprite):
       - Definir self.animacion_actual
       - Actualizar rect.x / rect.y con la posición del personaje lógico
     """
+
     def __init__(self, personaje_logico, ruta_imagen, color):
         super().__init__()
-        self.logico = personaje_logico  # referencia al personaje lógico, que NO depende de Pygame
+        self.logico = (
+            personaje_logico  # referencia al personaje lógico, que NO depende de Pygame
+        )
         self.hoja_sprite = pygame.image.load(ruta_imagen).convert()
         self.hoja_sprite.set_colorkey(color)
 
@@ -29,7 +33,7 @@ class SpriteBase(pygame.sprite.Sprite):
             self.logico.posx,
             self.logico.posy,
             self.logico.scale_ancho,
-            self.logico.scale_alto
+            self.logico.scale_alto,
         )
 
         # Superficie inicial (hasta cargar animaciones)
@@ -37,53 +41,72 @@ class SpriteBase(pygame.sprite.Sprite):
         self.image.fill((100, 100, 100))  # color gris de placeholder
 
     def obtener_superficie_actual(self):
-        superficie_actual = self.superficies[self.animacion_actual]  # si animacion_actual fuera izquierda
-        delays=self.frame_delays[self.animacion_actual]# me devuelve 8 si es izquierda	
-         
-        clip=superficie_actual[self.frame // delays]  # Obtener el frame correspondiente
-       
+        superficie_actual = self.superficies[
+            self.animacion_actual
+        ]  # si animacion_actual fuera izquierda
+        delays = self.frame_delays[
+            self.animacion_actual
+        ]  # me devuelve 8 si es izquierda
+
+        clip = superficie_actual[
+            self.frame // delays
+        ]  # Obtener el frame correspondiente
+
         return clip
 
-    def generar_superficies_reflejadas(self,superficies,num_frames,frame_delays):
+    def generar_superficies_reflejadas(self, superficies, num_frames, frame_delays):
         # **Generar las versiones reflejadas**
-        for unMovimiento,opuesto in self.reflejos.items():
-            superficies[opuesto] = [pygame.transform.flip(img, True, False) for img in superficies[unMovimiento]]
-            num_frames[opuesto] = num_frames[unMovimiento]  
-            frame_delays[opuesto] = frame_delays[unMovimiento]  
+        for unMovimiento, opuesto in self.reflejos.items():
+            superficies[opuesto] = [
+                pygame.transform.flip(img, True, False)
+                for img in superficies[unMovimiento]
+            ]
+            num_frames[opuesto] = num_frames[unMovimiento]
+            frame_delays[opuesto] = frame_delays[unMovimiento]
 
         self.superficies = superficies
-        
-        self.num_frames=num_frames
-        self.frame_delays=frame_delays
-        
-    def cargar_superficies_numframe_delays(self,animaciones, color,scale_ancho , scale_alto ):
+
+        self.num_frames = num_frames
+        self.frame_delays = frame_delays
+
+    def cargar_superficies_numframe_delays(
+        self, animaciones, color, scale_ancho, scale_alto
+    ):
         num_frames = {}
         frame_delays = {}
         superficies = {}
-        print("hola entro items ",animaciones.items() )
-        print("hola",animaciones.items() )
+        print("hola entro items ", animaciones.items())
+        print("hola", animaciones.items())
         for animacion, data in animaciones.items():
-            print("hola entro animacion  data " ,data )
+            print("hola entro animacion  data ", data)
             num_frames[animacion] = len(data["frames"])
             frame_delays[animacion] = data["frame_delay"]
 
             # Cargar los frames de la animación
             superficies[animacion] = []
             for frame in data["frames"].values():
-                clip = self.hoja_sprite.subsurface((frame["x"], frame["y"], frame["sprite_ancho"], frame["sprite_alto"]))
-                clip=pygame.transform.scale(clip, ( scale_ancho,  scale_alto))
-                clip.set_colorkey( color)
+                clip = self.hoja_sprite.subsurface(
+                    (
+                        frame["x"],
+                        frame["y"],
+                        frame["sprite_ancho"],
+                        frame["sprite_alto"],
+                    )
+                )
+                clip = pygame.transform.scale(clip, (scale_ancho, scale_alto))
+                clip.set_colorkey(color)
                 superficies[animacion].append(clip)
 
-        self.generar_superficies_reflejadas(superficies,num_frames,frame_delays)
+        self.generar_superficies_reflejadas(superficies, num_frames, frame_delays)
+
     def actualizar_frame(self):
-        self.frame = self.frame+ 1
-        num_frame_actual=self.num_frames[self.animacion_actual]
-        delay_actual=self.frame_delays[self.animacion_actual]
-        
+        self.frame = self.frame + 1
+        num_frame_actual = self.num_frames[self.animacion_actual]
+        delay_actual = self.frame_delays[self.animacion_actual]
+
         if self.frame >= num_frame_actual * delay_actual:
             self.frame = 0
-            
+
     def update(self):
         """
         - Sincroniza la posición con self.logico.
@@ -93,5 +116,3 @@ class SpriteBase(pygame.sprite.Sprite):
         # Sincronizar rect
         self.rect.x = self.logico.posx
         self.rect.y = self.logico.posy
-
-         
